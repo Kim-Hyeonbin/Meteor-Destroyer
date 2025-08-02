@@ -16,6 +16,10 @@ class GameScene(BaseScene):
         self.medium_meteors = []
         self.big_meteors = []
 
+        self.launch_laser = False
+        self.for_burst = 0
+        self.num_laser = 0
+
         self.laser_sound = pygame.mixer.Sound("assets/sounds/launch_laser.wav")
         self.meteor_explosion_sound = pygame.mixer.Sound(
             "assets/sounds/meteor_explosion.wav"
@@ -44,17 +48,29 @@ class GameScene(BaseScene):
 
     def on_mouse_button_down(self, button):
         if button == 1:
-            self.lasers.append(
-                Laser(
-                    self.player_ship.x + self.player_ship.image.get_width() / 2,
-                    self.player_ship.y,
-                )
-            )
-            self.laser_sound.play()
+            self.launch_laser = True
+            self.for_burst = pygame.time.get_ticks()
+            self.num_laser = 0
 
     def on_update(self, delta_seconds):
         self.player_ship.update(delta_seconds)
 
+        # 3발 점사를 위한 구문
+        now = pygame.time.get_ticks()
+        if self.launch_laser:
+            if now >= self.for_burst + self.num_laser * 100:  # 100ms 간격
+                self.lasers.append(
+                    Laser(
+                        self.player_ship.x + self.player_ship.image.get_width() / 2,
+                        self.player_ship.y,
+                    )
+                )
+                self.laser_sound.play()
+                self.num_laser += 1
+                if self.num_laser >= 3:
+                    self.launch_laser = False
+
+        print(len(self.lasers))
         for laser in self.lasers:
             laser.update(delta_seconds)
             if laser.y < 0:
