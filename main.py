@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import *
 from scene_manager import SceneManager
@@ -32,8 +33,8 @@ SceneManager.instance.add_scene("game", GameScene())
 SceneManager.instance.add_scene("game_over", GameOverScene())
 
 # 메인 게임 루프
-run = True
-while run:
+
+while True:
 
     # 이벤트 처리 루프
     for event in pygame.event.get():
@@ -44,7 +45,7 @@ while run:
         ):
             print("Shutdown")
             pygame.quit()
-            run = False
+            sys.exit()
             break
 
         # 키 입력 처리 (씬에 전달)

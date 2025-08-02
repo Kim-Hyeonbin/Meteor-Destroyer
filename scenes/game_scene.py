@@ -31,6 +31,9 @@ class GameScene(BaseScene):
     def enter_scene(self):
         # Scene이 시작되면 PlayerShip 객체 생성
         self.player_ship = PlayerShip()
+        # 마우스 포인터를 숨김과 동시에 시작 위치로 이동
+        pygame.mouse.set_pos((SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200))
+        pygame.mouse.set_visible(False)
 
     def exit_scene(self):
         # Scene이 시작되면 생성된 객체 일괄 삭제
@@ -42,11 +45,16 @@ class GameScene(BaseScene):
     def on_mouse_button_down(self, button):
         if button == 1:
             self.lasers.append(
-                Laser(self.player_ship.rect.centerx, self.player_ship.rect.top)
+                Laser(
+                    self.player_ship.x + self.player_ship.image.get_width() / 2,
+                    self.player_ship.y,
+                )
             )
             self.laser_sound.play()
 
     def on_update(self, delta_seconds):
+        self.player_ship.update(delta_seconds)
+
         for laser in self.lasers:
             laser.update(delta_seconds)
             if laser.y < 0:

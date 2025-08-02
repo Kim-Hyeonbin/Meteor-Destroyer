@@ -3,8 +3,8 @@ from objects.object import Object
 
 class Laser(Object):
     def __init__(self, x, y):
-        super().__init__("assets/images/laser.png")
-        self.x = x
+        super().__init__(image_path="assets/images/laser.png", image_size=2)
+        self.x = x - self.image.get_width() / 2
         self.y = y
         self.speed = 600
 
