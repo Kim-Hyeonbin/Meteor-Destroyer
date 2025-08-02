@@ -4,7 +4,7 @@ import pygame
 class Object:
 
     # 오브젝트의 기본 생성자. 이미지 경로, 이미지 크기, x좌표와 y좌표, 충돌 타입을 매개 변수로 받음
-    def __init__(self, image_path, image_size, x, y, collision_type):
+    def __init__(self, image_path, image_size):
 
         # 이미지 생성 로직
         original_image = pygame.image.load(image_path)
@@ -17,9 +17,8 @@ class Object:
         )
 
         # 좌표 할당 로직
-        self.x = x
-        self.y = y
-        self.collision_type = collision_type
+        self.x = 0
+        self.y = 0
 
     # 객체의 각 꼭짓점을 반환
     @property
