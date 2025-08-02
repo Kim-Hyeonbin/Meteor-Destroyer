@@ -17,3 +17,6 @@ class BaseScene:
 
     def on_key_down(self, key):
         pass
+
+    def on_mouse_button_down(self, key):
+        pass

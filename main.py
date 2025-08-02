@@ -54,6 +54,9 @@ while run:
         if event.type == pygame.KEYUP:
             SceneManager.instance.scene.on_key_up(event.key)
 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            SceneManager.instance.scene.on_mouse_button_down(event.button)
+
     # 프레임 간 시간 계산 (초 단위)
     delta_seconds = clock.tick(FPS) / 1000
 
