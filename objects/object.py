@@ -21,6 +21,13 @@ class Object:
         self.y = y
         self.collision_type = collision_type
 
+    # 객체의 각 꼭짓점을 반환
+    @property
+    def rect(self):
+        return pygame.Rect(
+            self.x, self.y, self.image.get_width(), self.image.get_height()
+        )
+
     # 매 프레임 마다 호출할 업데이트 메서드. 추후 확장을 위해 선언
     def update(self):
         self.move()
