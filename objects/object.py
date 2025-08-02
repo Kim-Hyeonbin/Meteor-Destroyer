@@ -28,11 +28,11 @@ class Object:
         )
 
     # 매 프레임 마다 호출할 업데이트 메서드. 추후 확장을 위해 선언
-    def update(self):
-        self.move()
+    def update(self, delta_seconds):
+        self.move(delta_seconds)
 
     # 오브젝트를 움직이는 함수. 각 서브클래스에서 구현
-    def move(self):
+    def move(self, delta_seconds):
         pass
 
     # 객체를 화면에 그리는 메서드. 현재 화면을 매개 변수로 받음
