@@ -39,14 +39,21 @@ class GameScene(BaseScene):
         self.medium_meteors.clear()
         self.big_meteors.clear()
 
-    def on_key_down(self, key):
-        if key == pygame.K_RETURN:
-            SceneManager.instance.change_scene("game_over")
+    def on_mouse_button_down(self, button):
+        if button == 1:
+            self.lasers.append(
+                Laser(self.player_ship.rect.centerx, self.player_ship.rect.top)
+            )
+            self.laser_sound.play()
 
-    def on_render(self, surface):
-        font = pygame.font.Font(None, 50)
-        text = font.render("Game scene to be implemented", True, (255, 0, 0))
-        text_rect = text.get_rect(
-            center=(surface.get_width() / 2, surface.get_height() / 2)
-        )
-        surface.blit(text, text_rect)
+    def on_update(self, delta_seconds):
+        for laser in self.lasers:
+            laser.update(delta_seconds)
+            if laser.y < 0:
+                self.lasers.remove(laser)
+
+    def on_render(self, screen):
+        self.player_ship.draw(screen)
+
+        for laser in self.lasers:
+            laser.draw(screen)
