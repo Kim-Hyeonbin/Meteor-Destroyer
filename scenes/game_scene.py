@@ -34,7 +34,7 @@ class GameScene(BaseScene):
         )
 
         self.laser_sound.set_volume(0.3)
-        self.meteor_explosion_sound.set_volume(0.3)
+        self.meteor_explosion_sound.set_volume(0.8)
         self.ship_explosion_sound.set_volume(0.3)
 
     def enter_scene(self):
@@ -82,6 +82,16 @@ class GameScene(BaseScene):
             meteor = MeteorFactory.create_random_meteor()
             self.meteors.append(meteor)
             self.meteor_timer -= self.meteor_spawn_interval
+
+        for meteor in self.meteors[:]:
+            for laser in self.lasers[:]:
+                if meteor.collides_with(laser):
+                    self.lasers.remove(laser)
+                    meteor.resistance -= 1
+                    if meteor.resistance <= 0:
+                        self.meteors.remove(meteor)
+                    self.meteor_explosion_sound.play()
+                    break
 
         # 객체 업데이트 밑 화면 밖 객체 제거
         for laser in self.lasers[:]:  # 리스트 복사로 반복 중 삭제 대응

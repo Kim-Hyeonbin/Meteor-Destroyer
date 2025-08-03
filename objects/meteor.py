@@ -6,7 +6,7 @@ from objects.collider_mixin import ColliderMixin
 
 class Meteor(Object, ColliderMixin):
 
-    def __init__(self, image_path, image_size, speed):
+    def __init__(self, image_path, image_size, speed, resistance):
         Object.__init__(self, image_path, image_size)
         ColliderMixin.__init__(self, "circle")
 
@@ -18,6 +18,7 @@ class Meteor(Object, ColliderMixin):
         center_y = self.image.get_height()
         self.x = random.randint(center_x, SCREEN_WIDTH - center_x)
         self.y = -center_y
+        self.resistance = resistance
 
     # speed 값에 따라 각기 다른 속도로 하강
     def move(self, delta_seconds):
@@ -28,25 +29,37 @@ class Meteor(Object, ColliderMixin):
 class SmallMeteor(Meteor):
 
     def __init__(
-        self, image_path="assets/images/meteor_small.png", image_size=3, speed=600
+        self,
+        image_path="assets/images/meteor_small.png",
+        image_size=3,
+        speed=800,
+        resistance=4,
     ):
-        super().__init__(image_path, image_size, speed)
+        super().__init__(image_path, image_size, speed, resistance)
 
 
 class MediumMeteor(Meteor):
 
     def __init__(
-        self, image_path="assets/images/meteor_medium.png", image_size=5, speed=400
+        self,
+        image_path="assets/images/meteor_medium.png",
+        image_size=5,
+        speed=500,
+        resistance=8,
     ):
-        super().__init__(image_path, image_size, speed)
+        super().__init__(image_path, image_size, speed, resistance)
 
 
 class BigMeteor(Meteor):
 
     def __init__(
-        self, image_path="assets/images/meteor_big.png", image_size=10, speed=300
+        self,
+        image_path="assets/images/meteor_big.png",
+        image_size=10,
+        speed=400,
+        resistance=15,
     ):
-        super().__init__(image_path, image_size, speed)
+        super().__init__(image_path, image_size, speed, resistance)
 
 
 # 메테오 생성용 정적 메서드
