@@ -1,10 +1,11 @@
 import pygame
 from constants import *
+import score
 from scene_manager import SceneManager
 from scenes.base_scene import BaseScene
 from objects.player_ship import PlayerShip
 from objects.laser import Laser
-from objects.meteor import Meteor, SmallMeteor, MediumMeteor, BigMeteor, MeteorFactory
+from objects.meteor import MeteorFactory
 
 
 class GameScene(BaseScene):
@@ -58,6 +59,7 @@ class GameScene(BaseScene):
             self.num_laser = 0
 
     def on_update(self, delta_seconds):
+
         # 플레이어 위치 갱신
         self.player_ship.update(delta_seconds)
 
@@ -83,21 +85,24 @@ class GameScene(BaseScene):
             self.meteors.append(meteor)
             self.meteor_timer -= self.meteor_spawn_interval
 
+        # 메테오와 레이저 충돌 검사
         for meteor in self.meteors[:]:
             for laser in self.lasers[:]:
                 if meteor.collides_with(laser):
                     self.lasers.remove(laser)
                     meteor.resistance -= 1
-                    if meteor.resistance <= 0:
+                    if meteor.resistance <= 0:  # 메테오의 내구도가 0이 되면 객체 삭제
+                        score.score += meteor.score
                         self.meteors.remove(meteor)
                     self.meteor_explosion_sound.play()
                     break
 
+        # 플레이어와 메테오의 충돌 검사
         for meteor in self.meteors:
             if self.player_ship.collides_with(meteor):
                 self.ship_explosion_sound.play()
-                print("Game Over")
                 SceneManager.instance.change_scene("game_over")
+                break
 
         # 객체 업데이트 밑 화면 밖 객체 제거
         for laser in self.lasers[:]:  # 리스트 복사로 반복 중 삭제 대응
@@ -118,3 +123,8 @@ class GameScene(BaseScene):
 
         for meteor in self.meteors:
             meteor.draw(screen)
+
+        # 화면 왼쪽 상단 스코어 출력
+        font = pygame.font.Font(None, 40)
+        text = font.render(f"SCORE : {score.score}", True, (255, 255, 255))
+        screen.blit(text, (20, 20))

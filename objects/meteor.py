@@ -6,7 +6,7 @@ from objects.collider_mixin import ColliderMixin
 
 class Meteor(Object, ColliderMixin):
 
-    def __init__(self, image_path, image_size, speed, resistance):
+    def __init__(self, image_path, image_size, speed, resistance, score):
         Object.__init__(self, image_path, image_size)
         ColliderMixin.__init__(self, "circle")
 
@@ -19,6 +19,7 @@ class Meteor(Object, ColliderMixin):
         self.x = random.randint(center_x, SCREEN_WIDTH - center_x)
         self.y = -center_y
         self.resistance = resistance
+        self.score = score
 
     # speed 값에 따라 각기 다른 속도로 하강
     def move(self, delta_seconds):
@@ -34,8 +35,9 @@ class SmallMeteor(Meteor):
         image_size=3,
         speed=800,
         resistance=4,
+        score=50,
     ):
-        super().__init__(image_path, image_size, speed, resistance)
+        super().__init__(image_path, image_size, speed, resistance, score)
 
 
 class MediumMeteor(Meteor):
@@ -46,8 +48,9 @@ class MediumMeteor(Meteor):
         image_size=5,
         speed=500,
         resistance=8,
+        score=100,
     ):
-        super().__init__(image_path, image_size, speed, resistance)
+        super().__init__(image_path, image_size, speed, resistance, score)
 
 
 class BigMeteor(Meteor):
@@ -58,8 +61,9 @@ class BigMeteor(Meteor):
         image_size=10,
         speed=400,
         resistance=15,
+        score=500,
     ):
-        super().__init__(image_path, image_size, speed, resistance)
+        super().__init__(image_path, image_size, speed, resistance, score)
 
 
 # 메테오 생성용 정적 메서드

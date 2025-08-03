@@ -5,7 +5,7 @@ from objects.collider_mixin import ColliderMixin
 
 class PlayerShip(Object, ColliderMixin):
     def __init__(self):
-        Object.__init__(self, "assets/images/ship.png", 4)
+        Object.__init__(self, "assets/images/ship.png", 3.5)
         ColliderMixin.__init__(self, "mask")
 
     # 마우스를 따라 움직임
