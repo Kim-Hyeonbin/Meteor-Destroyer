@@ -5,8 +5,8 @@ from scene_manager import SceneManager
 from scenes.base_scene import BaseScene
 from objects.player_ship import PlayerShip
 from objects.laser import Laser
-from objects.meteor import MeteorFactory, BigMeteor
-from objects.spark import Spark
+from objects.meteor import MeteorFactory, BigMeteor, MediumMeteor, SmallMeteor
+from objects.effect import Spark, Explosion
 
 
 class GameScene(BaseScene):
@@ -17,6 +17,7 @@ class GameScene(BaseScene):
         self.lasers = []
         self.meteors = []
         self.sparks = []
+        self.explosions = []
 
         # 점사 레이저 발사 상태 제어용 변수
         self.launch_laser = False  # 점사 시작 여부
@@ -56,6 +57,7 @@ class GameScene(BaseScene):
         self.lasers.clear()
         self.meteors.clear()
         self.sparks.clear()
+        self.explosions.clear()
 
     def on_mouse_button_down(self, button):
         # 마우스 좌클릭 시 점사 레이저 발사 시작
@@ -108,6 +110,31 @@ class GameScene(BaseScene):
                     meteor.resistance -= 1
                     if meteor.resistance <= 0:  # 메테오의 내구도가 0이 되면 객체 삭제
                         score.score += meteor.score
+                        # 메테오 크기에 따라 폭발 사이즈 설정
+                        if isinstance(meteor, SmallMeteor):
+                            self.explosions.append(
+                                Explosion(
+                                    meteor.x + meteor.image.get_width() / 2 - 24,
+                                    meteor.y + meteor.image.get_height() / 2 - 24,
+                                    3,
+                                )
+                            )
+                        elif isinstance(meteor, MediumMeteor):
+                            self.explosions.append(
+                                Explosion(
+                                    meteor.x + meteor.image.get_width() / 2 - 32,
+                                    meteor.y + meteor.image.get_height() / 2 - 32,
+                                    4,
+                                )
+                            )
+                        elif isinstance(meteor, BigMeteor):
+                            self.explosions.append(
+                                Explosion(
+                                    meteor.x + meteor.image.get_width() / 2 - 48,
+                                    meteor.y + meteor.image.get_height() / 2 - 48,
+                                    6,
+                                )
+                            )
                         self.meteors.remove(meteor)
                     self.meteor_explosion_sound.play()
                     break
@@ -116,6 +143,7 @@ class GameScene(BaseScene):
         for meteor in self.meteors:
             if self.player_ship.collides_with(meteor):
                 self.ship_explosion_sound.play()
+                pygame.time.delay(3)
                 SceneManager.instance.change_scene("game_over")
                 break
 
@@ -134,8 +162,13 @@ class GameScene(BaseScene):
             if spark.is_finished():
                 self.sparks.remove(spark)
 
+        for explosion in self.explosions:
+            explosion.update(delta_seconds)
+            if explosion.is_finished():
+                self.explosions.remove(explosion)
+
     def on_render(self, screen):
-        # 플레이어와 레이저, 메테오를 화면에 그리기
+
         self.player_ship.draw(screen)
 
         for laser in self.lasers:
@@ -147,7 +180,10 @@ class GameScene(BaseScene):
         for spark in self.sparks:
             spark.draw(screen)
 
+        for explosion in self.explosions:
+            explosion.draw(screen)
+
         # 화면 왼쪽 상단 스코어 출력
-        font = pygame.font.Font(None, 40)
+        font = pygame.font.SysFont("Goudy Stout", 40)
         text = font.render(f"SCORE : {score.score}", True, (255, 255, 255))
         screen.blit(text, (20, 20))
