@@ -10,16 +10,19 @@ from objects.meteor import Meteor, SmallMeteor, MediumMeteor, BigMeteor
 class GameScene(BaseScene):
 
     def __init__(self):
+        # 플레이어, 레이저, 메테오 객체 리스트 초기화
         self.player_ship = None
         self.lasers = []
         self.small_meteors = []
         self.medium_meteors = []
         self.big_meteors = []
 
-        self.launch_laser = False
-        self.for_burst = 0
-        self.num_laser = 0
+        # 점사 레이저 발사 상태 제어용 변수
+        self.launch_laser = False  # 점사 시작 여부
+        self.for_burst = 0  # 점사 시작 시각 (ms 단위)
+        self.num_laser = 0  # 현재까지 발사한 레이저 수 (최대 3)
 
+        # 사운드 로드 및 볼륨 설정
         self.laser_sound = pygame.mixer.Sound("assets/sounds/launch_laser.wav")
         self.meteor_explosion_sound = pygame.mixer.Sound(
             "assets/sounds/meteor_explosion.wav"
@@ -28,34 +31,37 @@ class GameScene(BaseScene):
             "assets/sounds/ship_explosion.wav"
         )
 
-        self.laser_sound.set_volume(0.1)
-        self.meteor_explosion_sound.set_volume(0.1)
-        self.ship_explosion_sound.set_volume(0.1)
+        self.laser_sound.set_volume(0.3)
+        self.meteor_explosion_sound.set_volume(0.3)
+        self.ship_explosion_sound.set_volume(0.3)
 
     def enter_scene(self):
-        # Scene이 시작되면 PlayerShip 객체 생성
+        # 게임 씬 진입 시 플레이어 생성 및 마우스 초기 설정
         self.player_ship = PlayerShip()
-        # 마우스 포인터를 숨김과 동시에 시작 위치로 이동
+
+        # 마우스 포인터 숨김 + 지정 위치로 이동
         pygame.mouse.set_pos((SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200))
         pygame.mouse.set_visible(False)
 
     def exit_scene(self):
-        # Scene이 시작되면 생성된 객체 일괄 삭제
+        # 씬 종료 시 객체 리스트 초기화
         self.lasers.clear()
         self.small_meteors.clear()
         self.medium_meteors.clear()
         self.big_meteors.clear()
 
     def on_mouse_button_down(self, button):
+        # 마우스 좌클릭 시 점사 레이저 발사 시작
         if button == 1:
             self.launch_laser = True
             self.for_burst = pygame.time.get_ticks()
             self.num_laser = 0
 
     def on_update(self, delta_seconds):
+        # 플레이어 위치 갱신
         self.player_ship.update(delta_seconds)
 
-        # 3발 점사를 위한 구문
+        # 3발 점사 레이저 발사 처리
         now = pygame.time.get_ticks()
         if self.launch_laser:
             if now >= self.for_burst + self.num_laser * 100:  # 100ms 간격
@@ -70,13 +76,17 @@ class GameScene(BaseScene):
                 if self.num_laser >= 3:
                     self.launch_laser = False
 
+        # 디버깅용 출력 (현재 화면에 존재하는 레이저 개수)
         print(len(self.lasers))
-        for laser in self.lasers:
+
+        # 레이저 위치 갱신 및 화면 밖 레이저 제거
+        for laser in self.lasers[:]:  # 리스트 복사로 반복 중 삭제 대응
             laser.update(delta_seconds)
             if laser.y < 0:
                 self.lasers.remove(laser)
 
     def on_render(self, screen):
+        # 플레이어와 레이저 화면에 그리기
         self.player_ship.draw(screen)
 
         for laser in self.lasers:
