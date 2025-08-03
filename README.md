@@ -1,12 +1,27 @@
-# Meteor-Destroyer
+# Meteor-Destroyer ☄️
 
-pygame 모듈을 활용하여 간단한 게임을 만들어보는 프로젝트입니다.
+pygame 모듈을 활용하여 간단한 게임을 만들어보는 프로젝트입니다.  
+우주 공간을 배경으로 날아다니는 비행선이 무수히 많이 떨어지는 운석들을 파괴하는 게임입니다.
+
+## 게임 개요 🎮
+- 마우스를 움직여 기체를 조종하고, 좌클릭 시 세 발의 레이저를 0.1초 간격으로 발사합니다.  
+레이저를 발사하여 떨어지는 운석을 파괴하고 최대한 오래 버텨 고득점을 얻는 것을 목표로 합니다.
+- 1초를 버틸 때마다 5점씩 얻습니다.
+- 0.1초 당 하나의 무작위 운석이 무작위 x좌표로부터 떨어집니다.  
+운석은 세 종류가 있으며 각 운석은 서로 다른 크기 값과 속도값, 그리고 경도값과 점수값을 가집니다. 크기가 클 수록 느리고 단단하며, 파괴 시 높은 점수를 얻을 수 있습니다.  
+가장 작은 운석 파괴 시 50점, 중간 크기 운석은 100점, 가장 큰 운석은 500점을 얻을 수 있습니다.
 
 
-[사용한 에셋들의 출처]
+### 참고한 강의 ✏️
+---
+이 프로젝트는 인프런의 **초초보도 할 수 있다! 파이썬으로 씈 만드는 스페이스 인베이더** 강의를 참고하여 만들었습니다. Scene들을 다루는 방식과 main loop를 구성하는 방식을 중점적으로 참고하였습니다.
 
-효과음 : https://kenney.nl/assets/sci-fi-sounds
+🔗 [강의 바로 가기](https://inf.run/Tmsqc)  
 
-오브젝트 : https://kenney.nl/assets/pixel-shmup
+### 사용한 에셋들의 출처 🚀
+---
+🔊 [효과음](https://kenney.nl/assets/sci-fi-sounds)
 
-배경 이미지 : https://craftpix.net/freebies/free-moon-pixel-game-backgrounds/
+🛩️ [비행기, 레이저 이미지](https://kenney.nl/assets/pixel-shmup)
+
+🌌 [배경 이미지](https://craftpix.net/freebies/free-moon-pixel-game-backgrounds/)
