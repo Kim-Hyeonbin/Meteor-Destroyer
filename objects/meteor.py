@@ -39,6 +39,11 @@ class SmallMeteor(Meteor):
     ):
         super().__init__(image_path, image_size, speed, resistance, score)
 
+        # 운석을 무작위 각도로 돌린 채 생성하기 위한 속성
+        self.angel = random.choice(
+            [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
+        )
+
 
 class MediumMeteor(Meteor):
 
@@ -51,6 +56,11 @@ class MediumMeteor(Meteor):
         score=100,
     ):
         super().__init__(image_path, image_size, speed, resistance, score)
+
+        # 운석을 무작위 각도로 돌린 채 생성하기 위한 속성
+        self.angel = random.choice(
+            [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
+        )
 
 
 class BigMeteor(Meteor):

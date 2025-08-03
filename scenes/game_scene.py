@@ -5,7 +5,7 @@ from scene_manager import SceneManager
 from scenes.base_scene import BaseScene
 from objects.player_ship import PlayerShip
 from objects.laser import Laser
-from objects.meteor import MeteorFactory
+from objects.meteor import MeteorFactory, BigMeteor
 
 
 class GameScene(BaseScene):
@@ -85,6 +85,8 @@ class GameScene(BaseScene):
         self.meteor_timer += delta_seconds
         while self.meteor_timer >= self.meteor_spawn_interval:
             meteor = MeteorFactory.create_random_meteor()
+            if not isinstance(meteor, BigMeteor):
+                meteor.image = pygame.transform.rotate(meteor.image, meteor.angel)
             self.meteors.append(meteor)
             self.meteor_timer -= self.meteor_spawn_interval
 
