@@ -1,6 +1,7 @@
 import pygame
 from scene_manager import SceneManager
 from scenes.base_scene import BaseScene
+from constants import *
 
 
 class TitleScene(BaseScene):
@@ -9,10 +10,13 @@ class TitleScene(BaseScene):
         if key == pygame.K_RETURN:
             SceneManager.instance.change_scene("game")
 
-    def on_render(self, surface):
-        font = pygame.font.Font(None, 50)
-        text = font.render("Press Enter to Start", True, (255, 0, 0))
-        text_rect = text.get_rect(
-            center=(surface.get_width() / 2, surface.get_height() / 2)
+    def on_render(self, screen):
+
+        title_text = pygame.image.load("assets/images/title.png")
+        screen.blit(
+            title_text,
+            (
+                SCREEN_WIDTH / 2 - title_text.get_width() / 2,
+                SCREEN_HEIGHT / 2 - title_text.get_height() / 2,
+            ),
         )
-        surface.blit(text, text_rect)
