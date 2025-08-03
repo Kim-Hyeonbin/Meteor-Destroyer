@@ -6,6 +6,7 @@ from scenes.base_scene import BaseScene
 from objects.player_ship import PlayerShip
 from objects.laser import Laser
 from objects.meteor import MeteorFactory, BigMeteor
+from objects.spark import Spark
 
 
 class GameScene(BaseScene):
@@ -15,6 +16,7 @@ class GameScene(BaseScene):
         self.player_ship = None
         self.lasers = []
         self.meteors = []
+        self.sparks = []
 
         # 점사 레이저 발사 상태 제어용 변수
         self.launch_laser = False  # 점사 시작 여부
@@ -53,6 +55,7 @@ class GameScene(BaseScene):
         # 씬 종료 시 객체 리스트 초기화
         self.lasers.clear()
         self.meteors.clear()
+        self.sparks.clear()
 
     def on_mouse_button_down(self, button):
         # 마우스 좌클릭 시 점사 레이저 발사 시작
@@ -100,6 +103,7 @@ class GameScene(BaseScene):
         for meteor in self.meteors[:]:
             for laser in self.lasers[:]:
                 if meteor.collides_with(laser):
+                    self.sparks.append(Spark(laser.x, laser.y))
                     self.lasers.remove(laser)
                     meteor.resistance -= 1
                     if meteor.resistance <= 0:  # 메테오의 내구도가 0이 되면 객체 삭제
@@ -125,6 +129,11 @@ class GameScene(BaseScene):
             if meteor.y > SCREEN_HEIGHT:
                 self.meteors.remove(meteor)
 
+        for spark in self.sparks:
+            spark.update(delta_seconds)
+            if spark.is_finished():
+                self.sparks.remove(spark)
+
     def on_render(self, screen):
         # 플레이어와 레이저, 메테오를 화면에 그리기
         self.player_ship.draw(screen)
@@ -134,6 +143,9 @@ class GameScene(BaseScene):
 
         for meteor in self.meteors:
             meteor.draw(screen)
+
+        for spark in self.sparks:
+            spark.draw(screen)
 
         # 화면 왼쪽 상단 스코어 출력
         font = pygame.font.Font(None, 40)
