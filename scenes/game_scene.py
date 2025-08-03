@@ -25,6 +25,9 @@ class GameScene(BaseScene):
         self.meteor_spawn_interval = 0.1
         self.meteor_timer = 0
 
+        # 추가 점수 제어용 변수
+        self.score_timer = 0
+
         # 사운드 로드 및 볼륨 설정
         self.laser_sound = pygame.mixer.Sound("assets/sounds/launch_laser.wav")
         self.meteor_explosion_sound = pygame.mixer.Sound(
@@ -84,6 +87,12 @@ class GameScene(BaseScene):
             meteor = MeteorFactory.create_random_meteor()
             self.meteors.append(meteor)
             self.meteor_timer -= self.meteor_spawn_interval
+
+        # 추가 점수 시스템 (초당 +5점)
+        self.score_timer += delta_seconds
+        while self.score_timer >= 1.0:
+            score.score += 5
+            self.score_timer -= 1.0
 
         # 메테오와 레이저 충돌 검사
         for meteor in self.meteors[:]:
