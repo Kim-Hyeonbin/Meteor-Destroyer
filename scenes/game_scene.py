@@ -93,6 +93,12 @@ class GameScene(BaseScene):
                     self.meteor_explosion_sound.play()
                     break
 
+        for meteor in self.meteors:
+            if self.player_ship.collides_with(meteor):
+                self.ship_explosion_sound.play()
+                print("Game Over")
+                SceneManager.instance.change_scene("game_over")
+
         # 객체 업데이트 밑 화면 밖 객체 제거
         for laser in self.lasers[:]:  # 리스트 복사로 반복 중 삭제 대응
             laser.update(delta_seconds)
