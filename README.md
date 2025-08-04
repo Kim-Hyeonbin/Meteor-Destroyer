@@ -8,7 +8,7 @@ pygame 모듈을 활용하여 간단한 게임을 만들어보는 프로젝트�
 레이저를 발사하여 떨어지는 운석을 파괴하고 최대한 오래 버텨 고득점을 얻는 것을 목표로 합니다.
 - 1초를 버틸 때마다 5점씩 얻습니다.
 - 0.1초 당 하나의 무작위 운석이 무작위 x좌표로부터 떨어집니다.  
-운석은 세 종류가 있으며 각 운석은 서로 다른 크기 값과 속도값, 그리고 경도값과 점수값을 가집니다. 크기가 클 수록 느리고 단단하며, 파괴 시 높은 점수를 얻을 수 있습니다.  
+운석은 세 종류가 있으며 각 운석은 서로 다른 크기, 속도, 경도값과 점수를 가집니다. 크기가 클 수록 느리고 단단하며, 파괴 시 높은 점수를 얻을 수 있습니다.  
 가장 작은 운석 파괴 시 50점, 중간 크기 운석은 100점, 가장 큰 운석은 500점을 얻을 수 있습니다.
 
 
@@ -22,6 +22,8 @@ pygame 모듈을 활용하여 간단한 게임을 만들어보는 프로젝트�
 ---
 🔊 [효과음](https://kenney.nl/assets/sci-fi-sounds)
 
-🛩️ [비행기, 레이저 이미지](https://kenney.nl/assets/pixel-shmup)
+🎵 [BGM](https://opengameart.org/content/space-journey)
+
+🛩️ [오브젝트 이미지](https://kenney.nl/assets/pixel-shmup)
 
 🌌 [배경 이미지](https://craftpix.net/freebies/free-moon-pixel-game-backgrounds/)
