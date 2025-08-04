@@ -16,7 +16,7 @@ class Meteor(Object, ColliderMixin):
         # x좌표를 무작위로 설정
         center_x = self.image.get_width() // 2
         center_y = self.image.get_height()
-        self.x = random.randint(center_x, SCREEN_WIDTH - center_x)
+        self.x = random.randint(-center_x, SCREEN_WIDTH - center_x)
         self.y = -center_y
         self.resistance = resistance
         self.score = score
