@@ -41,10 +41,11 @@ class GameScene(BaseScene):
         )
         self.meteor_hit_sound = pygame.mixer.Sound("assets/sounds/meteor_hit.wav")
 
-        self.laser_sound.set_volume(0.2)
-        self.meteor_explosion_sound.set_volume(2)
-        self.ship_explosion_sound.set_volume(0.2)
+        self.laser_sound.set_volume(0.18)
+        self.meteor_explosion_sound.set_volume(1.25)
+        self.ship_explosion_sound.set_volume(0.5)
         self.meteor_hit_sound.set_volume(0.8)
+        self.channel = pygame.mixer.find_channel()
 
     def enter_scene(self):
         # 게임 씬 진입 시 플레이어 생성 및 마우스 초기 설정
@@ -112,7 +113,8 @@ class GameScene(BaseScene):
                     meteor.resistance -= 1
                     if meteor.resistance <= 0:  # 메테오의 내구도가 0이 되면 객체 삭제
                         score.score += meteor.score
-                        self.meteor_explosion_sound.play()
+                        if self.channel:
+                            self.channel.play(self.meteor_explosion_sound)
                         # 메테오 크기에 따라 폭발 사이즈 설정
                         if isinstance(meteor, SmallMeteor):
                             self.explosions.append(
@@ -145,8 +147,8 @@ class GameScene(BaseScene):
         # 플레이어와 메테오의 충돌 검사
         for meteor in self.meteors:
             if self.player_ship.collides_with(meteor):
-                self.ship_explosion_sound.play()
-                pygame.time.delay(10)
+                if self.channel:
+                    self.channel.play(self.ship_explosion_sound)
                 SceneManager.instance.change_scene("game_over")
                 break
 

@@ -12,9 +12,6 @@ class BaseScene:
     def on_render(self, screen):
         pass
 
-    def on_key_up(self, key):
-        pass
-
     def on_key_down(self, key):
         pass
 

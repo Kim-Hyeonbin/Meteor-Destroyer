@@ -12,6 +12,13 @@ print("Game start")
 # Pygame 초기화
 pygame.init()
 
+# bgm 설정
+
+pygame.mixer.init()
+pygame.mixer.music.load("assets/sounds/bgm.mp3")
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.35)
+
 # 키보드 입력 반복 설정 (0.5초 뒤부터 0.3초 간격)
 pygame.key.set_repeat(500, 300)
 
@@ -51,9 +58,6 @@ while True:
         # 키 입력 처리 (씬에 전달)
         if event.type == pygame.KEYDOWN:
             SceneManager.instance.scene.on_key_down(event.key)
-
-        if event.type == pygame.KEYUP:
-            SceneManager.instance.scene.on_key_up(event.key)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             SceneManager.instance.scene.on_mouse_button_down(event.button)

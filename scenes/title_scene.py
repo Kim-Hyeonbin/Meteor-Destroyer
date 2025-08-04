@@ -6,6 +6,9 @@ from constants import *
 
 class TitleScene(BaseScene):
 
+    def enter_scene(self):
+        pygame.mixer.music.unpause()
+
     def on_key_down(self, key):
         if key == pygame.K_RETURN:
             SceneManager.instance.change_scene("game")

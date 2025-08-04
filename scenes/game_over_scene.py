@@ -7,6 +7,9 @@ from constants import *
 
 class GameOverScene(BaseScene):
 
+    def enter_scene(self):
+        pygame.mixer.music.pause()
+
     def exit_scene(self):
         score.score = 0
 
