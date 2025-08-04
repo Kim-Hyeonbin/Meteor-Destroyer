@@ -17,7 +17,7 @@ pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load("assets/sounds/bgm.mp3")
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.35)
+pygame.mixer.music.set_volume(0.4)
 
 # 키보드 입력 반복 설정 (0.5초 뒤부터 0.3초 간격)
 pygame.key.set_repeat(500, 300)

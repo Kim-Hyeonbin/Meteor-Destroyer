@@ -42,9 +42,9 @@ class GameScene(BaseScene):
         self.meteor_hit_sound = pygame.mixer.Sound("assets/sounds/meteor_hit.wav")
 
         self.laser_sound.set_volume(0.18)
-        self.meteor_explosion_sound.set_volume(1.25)
+        self.meteor_explosion_sound.set_volume(1.1)
         self.ship_explosion_sound.set_volume(0.5)
-        self.meteor_hit_sound.set_volume(0.8)
+        self.meteor_hit_sound.set_volume(1)
         self.channel = pygame.mixer.find_channel()
 
     def enter_scene(self):
