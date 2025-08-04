@@ -62,6 +62,9 @@ class GameScene(BaseScene):
         self.sparks.clear()
         self.explosions.clear()
 
+        # 랭킹에 추가
+        score.save_score()
+
     def on_mouse_button_down(self, button):
         # 마우스 좌클릭 시 점사 레이저 발사 시작
         if button == 1:
