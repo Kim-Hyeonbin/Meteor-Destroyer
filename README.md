@@ -10,6 +10,19 @@ pygame 모듈을 활용하여 간단한 게임을 만들어보는 프로젝트�
 - 0.1초 당 하나의 무작위 운석이 무작위 x좌표로부터 떨어집니다.  
 운석은 세 종류가 있으며 각 운석은 서로 다른 크기, 속도, 경도값과 점수를 가집니다. 크기가 클 수록 느리고 단단하며, 파괴 시 높은 점수를 얻을 수 있습니다.  
 가장 작은 운석 파괴 시 50점, 중간 크기 운석은 100점, 가장 큰 운석은 500점을 얻을 수 있습니다.
+- 1등부터 3등까지의 기록을 저장하여 게임 오버 시 화면에 랭킹을 출력합니다.
+
+
+### 미리보기
+> 타이틀 화면
+<img src="https://github.com/user-attachments/assets/37bace67-d717-4fa3-9ad6-b90505064313" width="700"/>
+
+> 게임 플레이
+<img src="https://github.com/user-attachments/assets/4b8c4b8b-b98d-4e2c-9689-c85988f0fb4a" width="700"/>
+
+> 게임 오버 시
+<img src="https://github.com/user-attachments/assets/30771fa6-2634-4ee9-8093-a907b39322a5" width="700"/>
+
 
 
 ### 참고한 강의 ✏️
